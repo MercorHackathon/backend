@@ -1,0 +1,24 @@
+const { default: axios } = require("axios")
+
+async function huggingFaceAPI(sentence) {
+    const huggingfaceURI = 'https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions'
+    const request_data = {
+        inputs: sentence
+    }
+    try {
+        const data = (await axios.post(huggingfaceURI, request_data, 
+            {
+            headers: {
+                Authorization: `Bearer ${process.env.HUGGINGFACE_AUTH_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        })).data[0]
+        return data;
+    }
+    catch(err) {
+        console.error(err);
+        return [];
+    }
+}
+
+module.exports = huggingFaceAPI;
