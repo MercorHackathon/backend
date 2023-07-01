@@ -23,25 +23,26 @@ app.post('/analyze', (req, res) => {
   };
 
   query(requestData)
-    .then((response) => {
-      console.log('Hugging Face API response:', response);
+  .then((response) => {
+    console.log('Hugging Face API response:', response);
 
-      const emotions = response[0].scores;
-      const emotionResults = [];
-      for (const emotion in emotions) {
-        emotionResults.push({
-          emotion: emotion,
-          score: emotions[emotion].toFixed(4)
-        });
-      }
-      console.log('Emotion results:', emotionResults);
+    const emotions = response[0]; // Access the inner array
+    const emotionResults = [];
+    for (const emotion of emotions) { // Use "of" instead of "in" to iterate over array elements
+      emotionResults.push({
+        emotion: emotion.label,
+        score: emotion.score.toFixed(4)
+      });
+    }
+    console.log('Emotion results:', emotionResults);
 
-      res.json(emotionResults);
-    })
-    .catch((error) => {
-      console.error('An error occurred:', error.message);
-      res.status(500).send('An error occurred');
-    });
+    res.json(emotionResults);
+  })
+  .catch((error) => {
+    console.error('An error occurred:', error.message);
+    res.status(500).send('An error occurred');
+  });
+
 });
 
 async function query(data) {
