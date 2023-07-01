@@ -12,3 +12,5 @@
 
 ## In the terminal
 ![image](https://github.com/MercorHackathon/backend/assets/104089399/71b21ab8-4a4b-4a78-8151-6aa0400bfb5c)
+![image](https://github.com/MercorHackathon/backend/assets/104089399/eb89002d-9314-4a21-8a19-dd56dbfd2ddd)
+
