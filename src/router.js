@@ -1,9 +1,6 @@
 var express = require('express')
 const login = require('./routes/login')
-
 const register = require('./routes/register')
-const fitAuth = require('./routes/fitAuth')
-
 const search = require('./routes/search');
 var router = express.Router()
 
