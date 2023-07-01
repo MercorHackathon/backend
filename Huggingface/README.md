@@ -1,1 +1,2 @@
-# backend by Rohan
+# To run it
+node index.js
