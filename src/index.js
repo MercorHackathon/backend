@@ -28,13 +28,17 @@ app.use(passport.session());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+
 app.use(
 	cors({
+		origin: "http://localhost:3000",
+		methods: "GET,POST,PUT,DELETE",
 		credentials: true,
 	})
 );
 
 // Added router
 app.use('/api', router);
+app.use("/auth", authRoute);
 
 app.listen(8080, () => console.log("App listening at port 8080"));

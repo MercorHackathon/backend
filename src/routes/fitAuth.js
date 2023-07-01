@@ -20,7 +20,24 @@ router.get("/login/failed", (req, res) => {
 	});
 });
 
-router.get("/google", passport.authenticate("google", ["profile", "email"]));
+router.get("/google", passport.authenticate("google", [
+	"profile",
+	"email",
+	"https://www.googleapis.com/auth/fitness.activity.read",
+	"https://www.googleapis.com/auth/fitness.activity.write",
+	"https://www.googleapis.com/auth/fitness.body.read",
+	"https://www.googleapis.com/auth/fitness.body.write",
+	"https://www.googleapis.com/auth/fitness.location.read",
+	"https://www.googleapis.com/auth/fitness.location.write",
+	"https://www.googleapis.com/auth/fitness.nutrition.read",
+	"https://www.googleapis.com/auth/fitness.nutrition.write",
+	"https://www.googleapis.com/auth/fitness.heart_rate.read",
+	"https://www.googleapis.com/auth/fitness.blood_pressure.read",
+	"https://www.googleapis.com/auth/fitness.blood_glucose.read",
+	"https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
+	"https://www.googleapis.com/auth/fitness.body_temperature.read",
+	"https://www.googleapis.com/auth/fitness.reproductive_health.read"
+  ]));
 
 router.get(
 	"/google/callback",
