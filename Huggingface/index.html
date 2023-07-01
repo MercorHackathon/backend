@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentiment Analysis</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Sentiment Analysis</h1>
+  <form id="analyzeForm">
+    <label for="userInput">Enter your sentence:</label>
+    <input type="text" id="userInput" name="userInput">
+    <input type="submit" value="Analyze">
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    $(document).ready(function() {
+      $('#analyzeForm').submit(function(event) {
+        event.preventDefault();
+        var userInput = $('#userInput').val();
+        $.ajax({
+          url: '/analyze',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ userInput: userInput }),
+          success: function(response) {
+            var results = '';
+            for (var i = 0; i < response.length; i++) {
+              results += response[i].emotion + ': ' + response[i].score + '<br>';
+            }
+            $('#results').html(results);
+          },
+          error: function(xhr, status, error) {
+            console.error('An error occurred:', error);
+            $('#results').html('An error occurred');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
