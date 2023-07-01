@@ -1,6 +1,5 @@
 var express = require('express')
 var mongoose = require('mongoose')
-var app = express()
 var router = require('./router.js')
 const configDB = require('./config/configDB.js')
 
