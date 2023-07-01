@@ -1,0 +1,80 @@
+const { default: axios } = require("axios")
+
+async function huggingFaceAPI(sentence) {
+    const calculateComplexityScore = () => {
+        // Implement your complexity scoring logic here
+        // This can be based on sentence length, grammar complexity, presence of certain words, etc.
+        // For simplicity, we'll use sentence length as an example
+        return sentence.length;
+    }
+
+    const emotionBaseYValues = {
+        joy: 90,
+        neutral: 80,
+        approval: 70,
+        relief: 60,
+        admiration: 50,
+        excitement: 40,
+        caring: 30,
+        gratitude: 20,
+        amusement: 10,
+        love: 0, // Happy emotion with the highest value
+        optimism: -10,
+        realization: -20,
+        annoyance: -30,
+        disapproval: -40,
+        sadness: -50, // Sad emotion with the least value
+        pride: -60,
+        confusion: -70,
+        anger: -80,
+        desire: -90,
+        disappointment: -100,
+        curiosity: -110,
+        nervousness: -120,
+        surprise: -130,
+        remorse: -140,
+        grief: -150,
+        embarrassment: -160,
+        fear: -170,
+        disgust: -180
+    };
+
+    const huggingfaceURI = 'https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions'
+    const request_data = {
+        inputs: sentence
+    }
+    try {
+        const data = (await axios.post(huggingfaceURI, request_data, 
+            {
+            headers: {
+                Authorization: `Bearer ${process.env.HUGGINGFACE_AUTH_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        })).data[0]
+        const complexityScore = calculateComplexityScore(sentence);
+        const emotionResults = [];
+
+        for (const emotion of data) {
+            const label = emotion.label;
+            const score = emotion.score.toFixed(4);
+
+            // Calculate the adjusted y-axis value based on the complexity score
+            const baseYValue = emotionBaseYValues[label];
+            const yValue = baseYValue - complexityScore;
+
+            emotionResults.push({
+                emotion: label,
+                score: score,
+                yValue: yValue,
+            });
+        }
+
+        return emotionResults;
+    }
+    catch(err) {
+        console.error(err);
+        return [];
+    }
+}
+
+module.exports = huggingFaceAPI;
