@@ -11,8 +11,6 @@ const cookieSession = require("cookie-session");
 
 
 const app = express();
-
-
 // Connect mongoose
 configDB()
 
