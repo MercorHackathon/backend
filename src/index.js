@@ -1,6 +1,5 @@
 var express = require('express')
 var mongoose = require('mongoose')
-var app = express()
 var router = require('./router.js')
 const configDB = require('./config/configDB.js')
 
@@ -28,6 +27,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(
 	cors({
