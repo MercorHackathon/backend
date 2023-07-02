@@ -10,5 +10,5 @@ run "npm i -y" in root directory
 
 ## Instructions
 
-To start the client, navigate to the root directory and run the following command: "npm start
+To start the client, navigate to the root directory and run the following command: "npm start".
 
