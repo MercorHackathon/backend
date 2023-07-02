@@ -9,34 +9,34 @@ async function huggingFaceAPI(sentence) {
     }
 
     const emotionBaseYValues = {
-        joy: 90,
-        neutral: 80,
-        approval: 70,
-        relief: 60,
-        admiration: 50,
-        excitement: 40,
-        caring: 30,
-        gratitude: 20,
-        amusement: 10,
-        love: 0, // Happy emotion with the highest value
-        optimism: -10,
-        realization: -20,
-        annoyance: -30,
-        disapproval: -40,
-        sadness: -50, // Sad emotion with the least value
-        pride: -60,
-        confusion: -70,
-        anger: -80,
-        desire: -90,
-        disappointment: -100,
-        curiosity: -110,
-        nervousness: -120,
-        surprise: -130,
-        remorse: -140,
-        grief: -150,
-        embarrassment: -160,
-        fear: -170,
-        disgust: -180
+        joy: 140,
+        approval: 130,
+        relief: 120,
+        admiration: 110,
+        excitement: 100,
+        caring: 90,
+        gratitude: 80,
+        amusement: 70,
+        love: 60,
+        optimism: 50,
+        realization: 40,
+        surprise: 30,
+        curiosity: 20,
+        neutral: 0,
+        pride: -10,
+        confusion: -20,
+        desire: -30,
+        disapproval: 40,
+        anger: -50,
+        annoyance: -60,
+        disappointment: -70,
+        nervousness: -80,
+        embarrassment: -90,
+        fear: -100,
+        disgust: -110,
+        sadness: -120, 
+        remorse: -130,
+        grief: -140,
     };
 
     const huggingfaceURI = 'https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions'
@@ -69,11 +69,14 @@ async function huggingFaceAPI(sentence) {
             });
         }
 
-        return emotionResults;
+        // Return the emotion object with the highest score
+        return emotionResults.reduce((prev, curr) => {
+            return (curr.score > prev.score) ? curr : prev;
+        })
     }
     catch(err) {
         console.error(err);
-        return [];
+        return {};
     }
 }
 
