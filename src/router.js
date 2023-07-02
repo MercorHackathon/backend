@@ -5,6 +5,7 @@ const search = require('./routes/search');
 const twitterAPI = require('./routes/twitterAPI');
 const huggingFaceAPI = require('./routes/huggingfaceAPI');
 const mentalHealthData = require('./routes/mentalHealthData');
+const Phealth = require('./routes/Phealth')
 var router = express.Router()
 
 
@@ -14,6 +15,7 @@ router.get("/login", login)
 router.get('/search', search)
 router.get('/twitter', twitterAPI)
 router.get('/mental-health-data', mentalHealthData)
+router.get('/Phealth',Phealth)
 
 // Test route (remove later)
 router.get('/huggingface', async (req, res) => {
