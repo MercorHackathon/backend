@@ -1,30 +1,45 @@
 var express = require('express')
+const jwt = require('jsonwebtoken')
 const login = require('./routes/login')
 const register = require('./routes/register')
 const search = require('./routes/search');
-const twitterAPI = require('./routes/twitterAPI');
 const huggingFaceAPI = require('./routes/huggingfaceAPI');
 const getMentalHealthData = require('./routes/getMentalHealthData');
 const linkTwitterAccount = require('./routes/linkTwitterAccount');
 const User = require('./models/User');
 const updateMentalHealthData = require('./routes/updateMentalHealthData');
-const mentalHealthData = require('./routes/mentalHealthData');
 const Phealth = require('./routes/Phealth')
 
 var router = express.Router()
 
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        if (err) {
+            console.error(err)
+            return res.sendStatus(403)
+        }
+
+        req.user = user
+        next()
+    })
+}
 
 // Add routes here
 router.post("/register", register);
-router.get("/login", login)
-router.get('/search', search)
+router.post("/login", login)
+router.get('/search', authenticateToken, search)
 
 router.get('/updateMentalHealthData', updateMentalHealthData)
-router.get('/getMentalHealthData', getMentalHealthData)
-router.post('/linkTwitterAccount', linkTwitterAccount)
+router.get('/getMentalHealthData', authenticateToken, getMentalHealthData)
+router.post('/linkTwitterAccount', authenticateToken, linkTwitterAccount)
 
 // router.get('/twitter', twitterAPI)
-router.get('/mental-health-data', mentalHealthData)
+// router.get('/mental-health-data', mentalHealthData)
 router.get('/Phealth',Phealth)
 
 
