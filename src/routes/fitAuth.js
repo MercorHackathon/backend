@@ -20,7 +20,7 @@ router.get("/login/failed", (req, res) => {
 	});
 });
 
-router.get("/google", passport.authenticate("google", [
+router.get("/google", passport.authenticate("google-oauth20", [
 	"profile",
 	"email",
 	"https://www.googleapis.com/auth/fitness.activity.read",
@@ -41,10 +41,7 @@ router.get("/google", passport.authenticate("google", [
 
 router.get(
 	"/google/callback",
-	passport.authenticate("google", {
-		successRedirect: process.env.CLIENT_URL,
-		failureRedirect: "/login/failed",
-	})
+	passport.authenticate("google-oauth20")
 );
 
 router.get("/logout", (req, res) => {

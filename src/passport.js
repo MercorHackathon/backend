@@ -27,6 +27,8 @@ passport.use(
 			  ],
 		},
 		function (accessToken, refreshToken, profile, callback) {
+			profile.accessToken=accessToken;
+			profile.refreshToken=refreshToken;
 			callback(null, profile);
 		}
 	)

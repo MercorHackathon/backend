@@ -39,6 +39,12 @@ const userSchema = mongoose.Schema({
             type: Array,
             default: [],
         }
+    },
+    Phealth:{
+        type:Object
+    },
+    Mhealth:{
+        type:Object
     }
 })
 

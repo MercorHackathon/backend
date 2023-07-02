@@ -8,6 +8,9 @@ const getMentalHealthData = require('./routes/getMentalHealthData');
 const linkTwitterAccount = require('./routes/linkTwitterAccount');
 const User = require('./models/User');
 const updateMentalHealthData = require('./routes/updateMentalHealthData');
+const mentalHealthData = require('./routes/mentalHealthData');
+const Phealth = require('./routes/Phealth')
+
 var router = express.Router()
 
 
@@ -15,9 +18,15 @@ var router = express.Router()
 router.post("/register", register);
 router.get("/login", login)
 router.get('/search', search)
+
 router.get('/updateMentalHealthData', updateMentalHealthData)
 router.get('/getMentalHealthData', getMentalHealthData)
 router.post('/linkTwitterAccount', linkTwitterAccount)
+
+// router.get('/twitter', twitterAPI)
+router.get('/mental-health-data', mentalHealthData)
+router.get('/Phealth',Phealth)
+
 
 // Test routes (remove later)
 router.get('/huggingface', async (req, res) => {
